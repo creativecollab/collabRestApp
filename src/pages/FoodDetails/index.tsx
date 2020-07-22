@@ -87,7 +87,7 @@ const FoodDetails: React.FC = () => {
   function handleIncrementExtra(id: number): void {
     // Increment extra quantity
     const incrementedExtra = extras.map(extra => {
-      if (extra.id === extra_id) {
+      if (extra.id === id) {
         const { id, name, value, quantity } = extra;
 
         if (extra.quantity === undefined) {
@@ -95,7 +95,7 @@ const FoodDetails: React.FC = () => {
             id,
             name,
             value,
-            quantity: 1,
+            quantity,
           };
         }
 
@@ -103,9 +103,10 @@ const FoodDetails: React.FC = () => {
           id,
           name,
           value,
-          quantity: quantity + 1,
+          quantity: extra.quantity + 1,
         };
       }
+
       return extra;
     });
 
@@ -115,7 +116,7 @@ const FoodDetails: React.FC = () => {
   function handleDecrementExtra(id: number): void {
     // Decrement extra quantity
     const decrementedExtra = extras.map(extra => {
-      if (extra.id === extra_id) {
+      if (extra.id === id) {
         const { id, name, value, quantity } = extra;
 
         if (quantity >= 1) {
@@ -149,22 +150,6 @@ const FoodDetails: React.FC = () => {
     // Toggle if food is favorite or not
     setIsFavorite(!isFavorite);
   }, [isFavorite, food]);
-
-  const completeExtras = useMemo(() => {
-    return extras.map(extra => {
-      if (extra.quantity === undefined) {
-        return {
-          ...extra,
-          quantity: 0,
-        };
-      }
-
-      return {
-        ...extra,
-        quantity: extra.quantity,
-      };
-    });
-  }, [extras]);
 
   const formattedPriceFood = useMemo(() => {
     return {
